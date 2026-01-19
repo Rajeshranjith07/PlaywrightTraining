@@ -1,35 +1,11 @@
 package com.kpmg.test;
 
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import com.kpmg.base.AutomationWrapper;
 
-import com.microsoft.playwright.Browser;
-import com.microsoft.playwright.BrowserContext;
-import com.microsoft.playwright.Page;
-import com.microsoft.playwright.Playwright;
-import com.microsoft.playwright.BrowserType.LaunchOptions;
-
-public class LoginUITest {
-	Playwright playwright;
-	Page page;
+public class LoginUITest extends AutomationWrapper {
 	
-	@BeforeMethod
-	public void setup() {
-		playwright = Playwright.create();
-		Browser browser = playwright.chromium().launch(new LaunchOptions().setHeadless(false).setChannel("chrome"));
-		BrowserContext context = browser.newContext(); // kind of profile in browser
-		page = context.newPage(); // tab 1
-		page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-		
-	}
-	
-	@AfterMethod
-	public void teardown() {
-		playwright.close();
-	}
-
 	
 	@Test
 	public void titleTest() {
