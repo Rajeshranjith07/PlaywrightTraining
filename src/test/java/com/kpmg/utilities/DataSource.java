@@ -1,5 +1,8 @@
 package com.kpmg.utilities;
 
+import java.io.IOException;
+import java.lang.reflect.Method;
+
 import org.testng.annotations.DataProvider;
 
 public class DataSource {
@@ -18,6 +21,15 @@ public class DataSource {
 		data[1][2] = "Invalid credentials";
 		
 		return data;	
+	}
+	
+	@DataProvider
+	public Object[][] commonDataProvider(Method method) throws IOException{
+		
+		String sheetName=method.getName();
+		Object[][] data=ExcelUtils.getSheetIntoTwoDimensionalArray("Test-Data/orange-hrm-data.xlsx", sheetName);
+		return data;
+		
 	}
 	
 

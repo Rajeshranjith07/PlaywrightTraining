@@ -8,19 +8,19 @@ import com.kpmg.utilities.DataSource;
 
 public class LoginTest extends AutomationWrapper {
 	
-	@Test
-	public void validLoginTest()
+	@Test(dataProviderClass = DataSource.class,dataProvider = "commonDataProvider")
+	public void validLoginTest(String username, String password, String expectedValue)
 	{
-		page.locator("//input[@name='username']").fill("Admin");
-		page.locator("//input[@name='password']").fill("admin123");
+		page.locator("//input[@name='username']").fill(username);
+		page.locator("//input[@name='password']").fill(password);
 		page.locator("//button[contains(normalize-space(),'Login')]").click();
 		
-	    String header=page.locator("//h6[contains(normalize-space(),'Dashb')]").innerText();
-	    Assert.assertEquals(header, "Dashboard");
+	    String actualValue=page.locator("//h6[contains(normalize-space(),'Dashb')]").innerText();
+	    Assert.assertEquals(actualValue, expectedValue);
 	
 	}
 	
-	@Test(dataProviderClass = DataSource.class,dataProvider = "invalidLoginData")
+	@Test(dataProviderClass = DataSource.class,dataProvider = "commonDataProvider")
 	public void invalidLoginTest(String username, String password, String expectedError)
 	{
 		page.locator("//input[@name='username']").fill(username);
