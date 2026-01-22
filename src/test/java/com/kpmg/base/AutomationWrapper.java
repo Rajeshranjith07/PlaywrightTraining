@@ -2,6 +2,9 @@ package com.kpmg.base;
 
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Optional;
+import org.testng.annotations.Parameters;
+
 import com.microsoft.playwright.Browser;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
@@ -14,13 +17,15 @@ public class AutomationWrapper {
 	protected Page page;
 	
 	@BeforeMethod
-	public void setup() {
+	@Parameters({"browser"})
+	public void setup(@Optional("chrome") String browserName) 
+	{
 		playwright = Playwright.create();
-		Browser browser = playwright.chromium().launch(new LaunchOptions().setHeadless(false).setChannel("chrome"));
-		BrowserContext context = browser.newContext(); // kind of profile in browser
-		page = context.newPage(); // tab 1
-		page.navigate("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login");
-		
+		Browser browser = playwright.chromium().launch(
+				new LaunchOptions().setHeadless(false).setChannel(browserName));
+		BrowserContext context = browser.newContext();
+		page = context.newPage();
+		page.navigate("https://opensource-demo.orangehrmlive.com");
 	}
 	
 	@AfterMethod

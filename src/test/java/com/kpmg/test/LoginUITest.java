@@ -3,6 +3,7 @@ package com.kpmg.test;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import com.kpmg.base.AutomationWrapper;
+import com.kpmg.pages.LoginPage;
 
 public class LoginUITest extends AutomationWrapper {
 	
@@ -22,6 +23,16 @@ public class LoginUITest extends AutomationWrapper {
 		String headerText = page.locator("//h5").innerText();
 		Assert.assertEquals(headerText, "Login");
 
+	}
+	
+	@Test
+	public void placeholderTest() {
+		
+		LoginPage login=new LoginPage(page);
+		
+		Assert.assertEquals(login.getUsernamePlaceholder(), "Username");
+		Assert.assertEquals(login.getPasswordPlaceholder(), "Password");
+				
 	}
 
 }

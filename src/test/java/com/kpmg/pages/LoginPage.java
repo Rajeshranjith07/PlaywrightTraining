@@ -5,6 +5,10 @@ import com.microsoft.playwright.Page;
 public class LoginPage {
 	
 	private Page page;
+	private String usernameLocator = "xpath=//input[@name='username']";
+	private String passwordLocator = "xpath=//input[@name='password']";
+	private String loginLocator = "xpath=//button[contains(normalize-space(),'Login')]";
+	private String errorLocator = "xpath=//p[contains(normalize-space(),'Invalid')]";
 	
 	public LoginPage(Page page)
 	{
@@ -13,23 +17,31 @@ public class LoginPage {
 	}
 	public void enterUserName(String username)
 	{
-		page.locator("//input[@name='username']").fill(username);
+		page.locator(usernameLocator).fill(username);
 	}
 	
 	public void enterPassword(String password)
 	{
-		page.locator("//input[@name='password']").fill(password);
+		page.locator(passwordLocator).fill(password);
 	}
 	
 	public void clickOnLogin( )
 	{
-		page.locator("//button[contains(normalize-space(),'Login')]").click();
+		page.locator(loginLocator).click();
 	}
 	
 	public String getInvalidErrorMessage( )
 	{
-		 String InvalidError=page.locator("//p[text()='Invalid credentials']").innerText();
+		 String InvalidError=page.locator(errorLocator).innerText();
 		 return InvalidError;
+	}
+	
+	public String getUsernamePlaceholder() {
+		return page.locator(usernameLocator).getAttribute("placeholder");
+	}
+
+	public String getPasswordPlaceholder() {
+		return page.locator(passwordLocator).getAttribute("placeholder");
 	}
 	
 
